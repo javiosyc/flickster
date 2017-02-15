@@ -1,11 +1,10 @@
 package javio.com.flickster.models;
 
-import android.content.res.Configuration;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
@@ -14,45 +13,24 @@ import static com.loopj.android.http.AsyncHttpClient.log;
  * Created by javiosyc on 2017/2/14.
  */
 
-public class Movie {
-
-    private final String MOVIE_API_URL_PREFIX = "https://image.tmdb.org/t/p/";
-
-    private final String POSTER_SIZE = "w342";
-    private final String BACKDROP_SIZE = "w780";
-
-    private final String POSTER_URL_FORMAT = MOVIE_API_URL_PREFIX + POSTER_SIZE + "%s";
-    private final String BACK_DROP_URL_FORMAT = MOVIE_API_URL_PREFIX + BACKDROP_SIZE + "%s";
-
+//TODO implements Parcelable
+public class Movie implements Serializable{
     private final String posterPath;
     private final String originalTitle;
     private final String overview;
     private final String backDropPath;
 
-    public String getPosterPath() {
-
-        return String.format(POSTER_URL_FORMAT,posterPath);
-    }
-
-    public String getBackDropPath() {
-        return String.format(BACK_DROP_URL_FORMAT, backDropPath);
-    }
-
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
+    private final String releaseDate;
+    private final double voteAverage;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
         this.overview = jsonObject.getString("overview");
         this.backDropPath = jsonObject.getString("backdrop_path");
+        this.voteAverage = jsonObject.getDouble("vote_average");
+        this.releaseDate = jsonObject.getString("release_date");
     }
-
 
     public static ArrayList<Movie> fromJSONArray(JSONArray array) {
         ArrayList<Movie> results = new ArrayList<>();
@@ -68,17 +46,39 @@ public class Movie {
         return results;
     }
 
-    public String getPathByOrientation(int orientation) {
-        String path;
-        switch (orientation) {
-            case Configuration.ORIENTATION_LANDSCAPE:
-                path = this.getBackDropPath();
-                break;
-            case Configuration.ORIENTATION_PORTRAIT:
-            default:
-                path = this.getPosterPath();
-                break;
-        }
-        return path;
+    public String getPosterPath() {
+        return MovieUtils.getPosterUrl(posterPath);
+    }
+
+    public String getBackDropPath() {
+        return MovieUtils.getBackDropUrl(posterPath);
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "posterPath='" + posterPath + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", overview='" + overview + '\'' +
+                ", backDropPath='" + backDropPath + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", voteAverage=" + voteAverage +
+                '}';
     }
 }
