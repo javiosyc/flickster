@@ -33,6 +33,7 @@ import okhttp3.Response;
  */
 
 public class MovieUtils {
+    public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
     private static final String MOVIE_API_URL_PREFIX = "https://image.tmdb.org/t/p/";
 
@@ -130,10 +131,9 @@ public class MovieUtils {
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
                 }
-
                 final String responseData = response.body().string();
 
-                final JSONObject jsonObject ;
+                final JSONObject jsonObject;
                 try {
                     jsonObject = new JSONObject(responseData);
                 } catch (JSONException e) {
@@ -151,5 +151,4 @@ public class MovieUtils {
             }
         });
     }
-
 }

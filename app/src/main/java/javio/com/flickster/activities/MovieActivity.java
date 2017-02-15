@@ -1,8 +1,11 @@
 package javio.com.flickster.activities;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -38,12 +41,26 @@ public class MovieActivity extends AppCompatActivity {
 
         lvItems.setAdapter(movieArrayAdapter);
 
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        String clientType = getClientType();
 
-        //MovieUtils.getMoviesDataUsingAsyncHttpClient(url,movies,movieArrayAdapter);
+        if ("AsyncHttpClient".equals(clientType)) {
+            MovieUtils.getMoviesDataUsingAsyncHttpClient(MovieUtils.NOW_PLAYING_URL, movies, movieArrayAdapter);
+        } else {
+            MovieUtils.getMoviesDataUsingOkHttpClient(this, MovieUtils.NOW_PLAYING_URL, movies, movieArrayAdapter);
+        }
+    }
 
-        MovieUtils.getMoviesDataUsingOkHttpClient(this,url,movies,movieArrayAdapter);
-
+    private String getClientType() {
+        String clientType;
+        try {
+            ApplicationInfo info = getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = info.metaData;
+            clientType = bundle.getString("http_client");
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d("DEBUG", "client Type not found", e);
+            clientType = "";
+        }
+        return clientType;
     }
 
     @OnItemClick(R.id.lvMovies)

@@ -14,7 +14,8 @@ import static com.loopj.android.http.AsyncHttpClient.log;
  */
 
 //TODO implements Parcelable
-public class Movie implements Serializable{
+public class Movie implements Serializable {
+    private final Long id;
     private final String posterPath;
     private final String originalTitle;
     private final String overview;
@@ -24,6 +25,7 @@ public class Movie implements Serializable{
     private final double voteAverage;
 
     public Movie(JSONObject jsonObject) throws JSONException {
+        this.id = jsonObject.getLong("id");
         this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
         this.overview = jsonObject.getString("overview");
@@ -70,10 +72,15 @@ public class Movie implements Serializable{
         return overview;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
-                "posterPath='" + posterPath + '\'' +
+                "id=" + id +
+                ", posterPath='" + posterPath + '\'' +
                 ", originalTitle='" + originalTitle + '\'' +
                 ", overview='" + overview + '\'' +
                 ", backDropPath='" + backDropPath + '\'' +

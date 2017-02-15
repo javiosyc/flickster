@@ -18,14 +18,19 @@ import javio.com.flickster.models.MovieUtils;
  * Created by javiosyc on 2017/2/15.
  */
 public class MovieDetailActivity extends AppCompatActivity {
+    @BindView(R.id.ivDetailImage)
+    ImageView imageView;
+    @BindView(R.id.tvDetailTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvDetailOverView)
+    TextView tvOverview;
+    @BindView(R.id.tvDetailReleaseDate)
+    TextView tvDetailReleaseDate;
+    @BindView(R.id.rbVoteAverage)
+    RatingBar rbVoteAverage;
     private Intent intent;
     private Movie movie;
 
-    @BindView(R.id.ivDetailImage) ImageView imageView;
-    @BindView(R.id.tvDetailTitle) TextView tvTitle;
-    @BindView(R.id.tvDetailOverView) TextView tvOverview;
-    @BindView(R.id.tvDetailReleaseDate) TextView tvDetailReleaseDate;
-    @BindView(R.id.rbVoteAverage) RatingBar rbVoteAverage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,18 +40,16 @@ public class MovieDetailActivity extends AppCompatActivity {
         movie = (Movie) intent.getSerializableExtra("movie");
 
         initView(movie);
-
     }
-
 
     public void initView(Movie movie) {
         setContentView(R.layout.activity_movie_detail);
 
         ButterKnife.bind(this);
 
-        ViewGroup view = (ViewGroup)getWindow().getDecorView();
+        ViewGroup view = (ViewGroup) getWindow().getDecorView();
 
-        MovieUtils.setImageByUrl(view.getContext(),movie.getBackDropPath(),imageView);
+        MovieUtils.setImageByUrl(view.getContext(), movie.getBackDropPath(), imageView);
 
         tvTitle.setText(movie.getOriginalTitle());
         tvOverview.setText(movie.getOverview());
@@ -55,7 +58,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         rbVoteAverage.setNumStars(10);
         rbVoteAverage.setMax(10);
         rbVoteAverage.setStepSize(1);
-        rbVoteAverage.setRating( (float)movie.getVoteAverage());
-
+        rbVoteAverage.setRating((float) movie.getVoteAverage());
     }
 }

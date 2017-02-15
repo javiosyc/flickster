@@ -15,4 +15,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         tools:src="@mipmap/ic_launcher" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playButton"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivMovieFullImage"
+        android:layout_toEndOf="@+id/ivMovieFullImage" />
+
 </RelativeLayout>

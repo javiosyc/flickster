@@ -18,6 +18,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MovieDetailActivity" />
+
+        <meta-data
+            android:name="http_client"
+            android:value="AsyncHttpClient" />
+
+        <activity android:name=".activities.YouTubeActivity"></activity>
     </application>
 
 </manifest>
