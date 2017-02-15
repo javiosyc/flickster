@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/ivMovieFullImage"-->
+        <!--android:layout_width="match_parent"-->
+
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/playButton"-->
+        <!--android:adjustViewBounds="false"-->
+        <!--android:cropToPadding="false"-->
+        <!--tools:src="@mipmap/ic_launcher" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/playButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:focusable="false"-->
+        <!--android:text="PLAY" />-->
+
+    <!---->
+    <!---->
+<!--</LinearLayout> -->
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:descendantFocusability="blocksDescendants">
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
-    android:id="@+id/twTitle"
+    android:id="@+id/ivMovieFullImage"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/ivMovieFullImage"
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        tools:src="@mipmap/ic_launcher" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/playButton"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivMovieFullImage"
-        android:layout_toEndOf="@+id/ivMovieFullImage" />
-
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    tools:src="@mipmap/ic_launcher" />
+<ImageButton
+    android:id="@+id/playButton"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_centerInParent="true"
+    android:elevation="@android:dimen/dialog_min_width_major"
+    android:background="@android:drawable/ic_media_play"
+    />
 </RelativeLayout>

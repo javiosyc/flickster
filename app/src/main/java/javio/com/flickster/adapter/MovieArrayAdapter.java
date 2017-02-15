@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +28,29 @@ import javio.com.flickster.models.MovieUtils;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
+    private final static int POPULAR_AVARAGE_SOCRE = 6;
+
+    private enum MovieType {
+        POPULAR(1), NON_POPULAR(0);
+        private final int value;
+
+        private MovieType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public static MovieType getTypeBy(Movie movie) {
+            return movie.getVoteAverage() > POPULAR_AVARAGE_SOCRE ? POPULAR : NON_POPULAR;
+        }
+
+        public static MovieType getMoiveTypeByValue(int value) {
+            return value == 1 ? POPULAR : NON_POPULAR;
+        }
+    }
+
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
@@ -35,25 +58,19 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return MovieType.values().length;
     }
 
     @Override
     public int getItemViewType(int position) {
-        int type = 0;
         Movie movie = getItem(position);
-
-        if (movie.getVoteAverage() > 6) {
-            type = 1;
-        }
-
-        return type;
+        return MovieType.getTypeBy(movie).getValue();
     }
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        int type = getItemViewType(position);
+        MovieType type = MovieType.getMoiveTypeByValue(getItemViewType(position));
 
         final Movie movie = getItem(position);
 
@@ -62,7 +79,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
 
-            if (type == 1) {
+            if (type == MovieType.POPULAR) {
                 convertView = inflater.inflate(R.layout.item_movie_image, parent, false);
             } else {
                 convertView = inflater.inflate(R.layout.item_movie, parent, false);
@@ -75,9 +92,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (type == 1) {
+        if (type == MovieType.POPULAR) {
             //clear out image from convertView
+
             viewHolder.fullImageView.setImageResource(0);
+
+            //viewHolder.fullImageView.setImageResource(0);
             MovieUtils.setImageByUrlWithRoundedConer(
                     getContext(),
                     movie.getBackDropPath(),
@@ -86,13 +106,11 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent intent = new Intent(getContext(), YouTubeActivity.class);
                     intent.putExtra("movieId", movie.getId());
-                    ((AppCompatActivity)getContext()).startActivityForResult(intent,200);
+                    ((AppCompatActivity) getContext()).startActivityForResult(intent, 200);
                 }
             });
-
         } else {
             viewHolder.imageView.setImageResource(0);
             setImageByOrientation(viewHolder.imageView, movie);
@@ -131,7 +149,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         @Nullable
         @BindView(R.id.playButton)
-        Button playButton;
+        ImageButton playButton;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
