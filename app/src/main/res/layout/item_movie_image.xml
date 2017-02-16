@@ -50,5 +50,5 @@ android:layout_height="wrap_content" android:descendantFocusability="blocksDesce
     android:layout_centerInParent="true"
     android:elevation="@android:dimen/dialog_min_width_major"
     android:background="@android:drawable/ic_media_play"
-    />
+    android:visibility="invisible" />
 </RelativeLayout>

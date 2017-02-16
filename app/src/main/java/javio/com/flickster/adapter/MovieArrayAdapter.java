@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,7 +54,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         final Movie movie = getItem(position);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -72,14 +74,24 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         if (type == MovieType.POPULAR) {
             //clear out image from convertView
-
             viewHolder.fullImageView.setImageResource(0);
 
-            //viewHolder.fullImageView.setImageResource(0);
-            MovieUtils.setImageByUrlWithRoundedCorner(
+            viewHolder.playButton.setVisibility(View.INVISIBLE);
+
+            MovieUtils.setPopularImageByUrl(
                     getContext(),
                     movie.getBackDropPath(),
-                    viewHolder.fullImageView);
+                    viewHolder.fullImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            viewHolder.playButton.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            viewHolder.playButton.setVisibility(View.INVISIBLE);
+                        }
+                    });
 
             viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
                 @Override

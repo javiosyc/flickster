@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -71,14 +72,15 @@ public class MovieUtils {
                 .into(imageView);
     }
 
-    public static void setImageByUrlWithRoundedCorner(Context context, String url, ImageView imageView) {
+
+    public static void setPopularImageByUrl(Context context, String url, ImageView imageView, Callback callback) {
         Picasso.with(context).load(url)
                 .placeholder(R.drawable.ic_file_download_black_120dp)
                 .error(R.drawable.ic_error_black_320dp)
                 .transform(new RoundedCornersTransformation(30, 30))
-                .into(imageView);
-
+                .into(imageView, callback);
     }
+
 
     public static void getMoviesDataUsingAsyncHttpClient(String url, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
         AsyncHttpClient client = new AsyncHttpClient();
