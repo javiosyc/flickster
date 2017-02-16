@@ -49,7 +49,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         ViewGroup view = (ViewGroup) getWindow().getDecorView();
 
-        MovieUtils.setImageByUrl(view.getContext(), movie.getBackDropPath(), imageView);
+        MovieUtils.setDetailImageByUrl(view.getContext(), movie.getBackDropPath(), imageView);
 
         tvTitle.setText(movie.getOriginalTitle());
         tvOverview.setText(movie.getOverview());
@@ -57,7 +57,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         rbVoteAverage.setNumStars(10);
         rbVoteAverage.setMax(10);
-        rbVoteAverage.setStepSize(1);
+        rbVoteAverage.setStepSize(0.1f);
         rbVoteAverage.setRating((float) movie.getVoteAverage());
     }
 }

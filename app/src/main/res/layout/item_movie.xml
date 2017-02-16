@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
-    android:id="@+id/twTitle"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
+    <ImageView
+        android:id="@+id/ivMovieImage"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:src="@mipmap/ic_launcher"
+        android:paddingBottom="@dimen/fab_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingTop="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/content_margin"
+        android:layout_marginLeft="@dimen/content_margin"
+        android:layout_marginTop="@dimen/content_margin" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-
+        android:layout_toRightOf="@+id/ivMovieImage"
+        android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         tools:text="Rings"
-        android:textAlignment="viewStart"
-
-        android:padding="@dimen/fab_margin"
-        android:layout_margin="2dp" />
-
-
-    <ImageView
-        android:id="@+id/ivMovieImage"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_height="wrap_content"
-        tools:src="@mipmap/ic_launcher"
-        android:layout_margin="@dimen/content_margin"
-        android:padding="@dimen/fab_margin" />
+        android:layout_marginTop="@dimen/movie_title_margin"
+        android:textColor="@color/movie_title"
+        android:fontFamily="monospace"
+        android:paddingLeft="@dimen/content_margin" />
 
 
     <TextView
@@ -39,8 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivMovieImage"
-        tools:text="Julia becomes worried about her boyfriend, Holt when he explores the dark urban legend of a mysterious videotape said to kill the watcher seven days after viewing. She sacrifices herself to save her boyfriend and in doing so makes a horrifying discovery: there is a movie within the movie that no one has ever seen before."
+        android:layout_margin="2dp"
         android:padding="@dimen/fab_margin"
-        android:layout_margin="2dp" />
+        tools:text="Julia becomes worried about her boyfriend, Holt when he explores the dark urban legend of a mysterious videotape said to kill the watcher seven days after viewing. She sacrifices herself to save her boyfriend and in doing so makes a horrifying discovery: there is a movie within the movie that no one has ever seen before."
+        android:textColor="@color/movie_overview" />
 
 </RelativeLayout>

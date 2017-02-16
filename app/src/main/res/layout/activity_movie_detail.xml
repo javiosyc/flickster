@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/ivDetailImage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:src="@drawable/ic_file_download_black_120dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <RatingBar
-        android:id="@+id/rbVoteAverage"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numStars="10"
-        android:rating="0" />
+        <ImageView
+            android:id="@+id/ivDetailImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/content_margin"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            tools:src="@drawable/ic_file_download_342" />
 
-    <TextView
-        android:id="@+id/tvDetailTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:text="Rings" />
+        <RatingBar
+            android:id="@+id/rbVoteAverage"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numStars="10"
+            android:rating="0"
+            android:layout_margin="@dimen/content_margin"
+            android:background="@color/rating_bar_bg" />
 
-    <TextView
-        android:id="@+id/tvDetailReleaseDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:text="2017-02-01" />
+        <TextView
+            android:id="@+id/tvDetailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/movie_title"
+            tools:text="Rings"
+            android:layout_margin="@dimen/content_margin" />
 
-    <TextView
-        android:id="@+id/tvDetailOverView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Julia becomes worried about her boyfriend, Holt when he explores the dark urban legend of a mysterious videotape said to kill the watcher seven days after viewing. She sacrifices herself to save her boyfriend and in doing so makes a horrifying discovery: there is a movie within the movie that no one has ever seen before." />
+        <TextView
+            android:id="@+id/tvDetailReleaseDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            tools:text="2017-02-01"
+            android:padding="@dimen/content_margin" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvDetailOverView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/movie_overview"
+            tools:text="Julia becomes worried about her boyfriend, Holt when he explores the dark urban legend of a mysterious videotape said to kill the watcher seven days after viewing. She sacrifices herself to save her boyfriend and in doing so makes a horrifying discovery: there is a movie within the movie that no one has ever seen before."
+            android:padding="@dimen/content_margin" />
+    </LinearLayout>
+</ScrollView>

@@ -30,7 +30,7 @@ import javio.com.flickster.models.MovieUtils;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
-    private final static int POPULAR_AVERAGE_SCORE = 6;
+    private final static int POPULAR_AVERAGE_SCORE = 7;
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
@@ -57,14 +57,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         final ViewHolder viewHolder;
 
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-
-            if (type == MovieType.POPULAR) {
-                convertView = inflater.inflate(R.layout.item_movie_image, parent, false);
-            } else {
-                convertView = inflater.inflate(R.layout.item_movie, parent, false);
-            }
-
+            convertView = type.inflate(getContext(), parent);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
 
@@ -114,20 +107,19 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         int orientation = imageView.getResources().getConfiguration().orientation;
 
-        MovieUtils.setImageByUrl(
-                getContext(),
-                MovieUtils.getPathByOrientation(orientation, movie),
-                imageView);
+        MovieUtils.setImageByOrientation(getContext(), imageView, movie, orientation);
 
         return imageView;
     }
 
     private enum MovieType {
-        POPULAR(1), NON_POPULAR(0);
+        POPULAR(1, R.layout.item_movie_image), NON_POPULAR(0, R.layout.item_movie);
         private final int value;
+        private final int resource;
 
-        private MovieType(int value) {
+        private MovieType(int value, int resource) {
             this.value = value;
+            this.resource = resource;
         }
 
         public static MovieType getTypeBy(Movie movie) {
@@ -136,6 +128,11 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         public static MovieType getMoiveTypeByValue(int value) {
             return value == 1 ? POPULAR : NON_POPULAR;
+        }
+
+        public View inflate(Context context, ViewGroup viewGroup) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            return inflater.inflate(resource, viewGroup, false);
         }
 
         public int getValue() {

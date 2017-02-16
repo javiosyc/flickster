@@ -31,10 +31,10 @@ import network.OKHttpClientUtils;
 public class MovieUtils {
     public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
-    private static final String MOVIE_API_URL_PREFIX = "https://image.tmdb.org/t/p/";
+    private static final String MOVIE_API_URL_PREFIX = "https://image.tmdb.org/t/p/w";
 
-    private static final String POSTER_SIZE = "w342";
-    private static final String BACKDROP_SIZE = "w780";
+    private static final int POSTER_SIZE = 342;
+    private static final int BACKDROP_SIZE = 780;
 
     private static final String POSTER_URL_FORMAT = MOVIE_API_URL_PREFIX + POSTER_SIZE + "%s";
     private static final String BACK_DROP_URL_FORMAT = MOVIE_API_URL_PREFIX + BACKDROP_SIZE + "%s";
@@ -51,23 +51,9 @@ public class MovieUtils {
     }
 
 
-    public static String getPathByOrientation(int orientation, Movie movie) {
-        String path;
-        switch (orientation) {
-            case Configuration.ORIENTATION_LANDSCAPE:
-                path = movie.getBackDropPath();
-                break;
-            case Configuration.ORIENTATION_PORTRAIT:
-            default:
-                path = movie.getPosterPath();
-                break;
-        }
-        return path;
-    }
-
-    public static void setImageByUrl(Context context, String url, ImageView imageView) {
-        Picasso.with(context).load(url).fit()
-                .placeholder(R.drawable.ic_file_download_black_120dp)
+    public static void setDetailImageByUrl(Context context, String url, ImageView imageView) {
+        Picasso.with(context).load(url).resize(BACKDROP_SIZE, 0)
+                .placeholder(R.drawable.ic_file_download_342)
                 .error(R.drawable.ic_error_black_320dp)
                 .into(imageView);
     }
@@ -75,17 +61,17 @@ public class MovieUtils {
 
     public static void setPopularImageByUrl(Context context, String url, ImageView imageView, Callback callback) {
         Picasso.with(context).load(url)
-                .placeholder(R.drawable.ic_file_download_black_120dp)
+                .placeholder(R.drawable.ic_file_download_342)
                 .error(R.drawable.ic_error_black_320dp)
                 .transform(new RoundedCornersTransformation(30, 30))
                 .into(imageView, callback);
     }
 
 
-    public static void getMoviesDataUsingAsyncHttpClient(String url, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
+    public static void getMoviesDataUsingAsyncHttpClient(final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(url, new JsonHttpResponseHandler() {
+        client.get(NOW_PLAYING_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if (statusCode >= 200 && statusCode < 300) {
@@ -112,10 +98,10 @@ public class MovieUtils {
         }
     }
 
-    public static void getMoviesDataUsingOkHttpClient(final MovieActivity movieActivity, String url, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
+    public static void getMoviesDataUsingOkHttpClient(final MovieActivity movieActivity, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
         OKHttpClientUtils client = OKHttpClientUtils.getOkHttpClient();
 
-        client.asyncCall(url, client.new OKHttpClientCallBack() {
+        client.asyncCall(MovieUtils.NOW_PLAYING_URL, client.new OKHttpClientCallBack() {
             @Override
             protected void processingJsonData(final JSONObject jsonObject) {
                 movieActivity.runOnUiThread(new Runnable() {
@@ -127,5 +113,47 @@ public class MovieUtils {
                 });
             }
         });
+    }
+
+    public static void setImageByOrientation(Context context, ImageView imageView, Movie movie, int ori) {
+
+        Orientation orientation = Orientation.getFrom(ori);
+
+        Picasso.with(context).load(orientation.getPathFromMovie(movie))
+                .resize(orientation.imageSize, 0)
+                .placeholder(orientation.placeholderResource)
+                .error(R.drawable.ic_error_black_320dp)
+                .transform(new RoundedCornersTransformation(10, 10))
+                .into(imageView);
+    }
+
+    private enum Orientation {
+        LANDSCAPE(BACKDROP_SIZE, R.drawable.ic_file_download_342) {
+            @Override
+            protected String getPathFromMovie(Movie movie) {
+                return movie.getBackDropPath();
+            }
+        }, PORTRAIT(POSTER_SIZE, R.drawable.ic_file_download_342) {
+            @Override
+            protected String getPathFromMovie(Movie movie) {
+                return movie.getPosterPath();
+            }
+        };
+        private final int imageSize;
+        private final int placeholderResource;
+
+        Orientation(int imageSize, int placeholderResource) {
+            this.imageSize = imageSize;
+            this.placeholderResource = placeholderResource;
+        }
+
+        private static Orientation getFrom(int orientation) {
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                return LANDSCAPE;
+            } else {
+                return PORTRAIT;
+            }
+        }
+        protected abstract String getPathFromMovie(Movie movie);
     }
 }

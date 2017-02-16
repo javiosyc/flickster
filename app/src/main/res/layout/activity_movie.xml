@@ -17,5 +17,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/black" />
+        android:background="@android:color/black"
+        android:dividerHeight="@dimen/movie_list_item_divider" />
 </RelativeLayout>

@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:background">@color/colorBlack</item>
+        <item name="android:listDivider">@drawable/item_border</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

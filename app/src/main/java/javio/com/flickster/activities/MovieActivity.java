@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -41,12 +39,16 @@ public class MovieActivity extends AppCompatActivity {
 
         lvItems.setAdapter(movieArrayAdapter);
 
+        getMoviesFromMovieDatabase();
+    }
+
+    private void getMoviesFromMovieDatabase() {
         String clientType = getClientType();
 
         if ("AsyncHttpClient".equals(clientType)) {
-            MovieUtils.getMoviesDataUsingAsyncHttpClient(MovieUtils.NOW_PLAYING_URL, movies, movieArrayAdapter);
+            MovieUtils.getMoviesDataUsingAsyncHttpClient(movies, movieArrayAdapter);
         } else {
-            MovieUtils.getMoviesDataUsingOkHttpClient(this, MovieUtils.NOW_PLAYING_URL, movies, movieArrayAdapter);
+            MovieUtils.getMoviesDataUsingOkHttpClient(this, movies, movieArrayAdapter);
         }
     }
 
@@ -57,14 +59,14 @@ public class MovieActivity extends AppCompatActivity {
             Bundle bundle = info.metaData;
             clientType = bundle.getString("http_client");
         } catch (PackageManager.NameNotFoundException e) {
-            Log.d("DEBUG", "client Type not found", e);
+            Log.d("DEBUG", "Client Type is not found", e);
             clientType = "";
         }
         return clientType;
     }
 
     @OnItemClick(R.id.lvMovies)
-    public void showEditActivity(AdapterView<?> parent, View view, int position, long id) {
+    public void showEditActivity(int position) {
         Intent intent = new Intent(MovieActivity.this, MovieDetailActivity.class);
         intent.putExtra("movie", movies.get(position));
         startActivityForResult(intent, REQUEST_CODE);
