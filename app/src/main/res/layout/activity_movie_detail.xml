@@ -9,7 +9,7 @@
         android:id="@+id/ivDetailImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:src="@drawable/ic_file_download_black_24dp" />
+        tools:src="@drawable/ic_file_download_black_120dp" />
 
     <RatingBar
         android:id="@+id/rbVoteAverage"
