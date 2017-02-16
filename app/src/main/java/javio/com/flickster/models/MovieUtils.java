@@ -13,7 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +21,7 @@ import javio.com.flickster.R;
 import javio.com.flickster.activities.MovieActivity;
 import javio.com.flickster.adapter.MovieArrayAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import network.OKHttpClientUtils;
 
 /**
  * Created by javiosyc on 2017/2/14.
@@ -71,15 +66,15 @@ public class MovieUtils {
 
     public static void setImageByUrl(Context context, String url, ImageView imageView) {
         Picasso.with(context).load(url).fit()
-                .placeholder(R.drawable.ic_file_download_black_24dp)
-                .error(R.drawable.ic_error_black_24dp)
+                .placeholder(R.drawable.ic_file_download_black_120dp)
+                .error(R.drawable.ic_error_black_320dp)
                 .into(imageView);
     }
 
-    public static void setImageByUrlWithRoundedConer(Context context, String url, ImageView imageView) {
+    public static void setImageByUrlWithRoundedCorner(Context context, String url, ImageView imageView) {
         Picasso.with(context).load(url)
-                .placeholder(R.drawable.ic_file_download_black_24dp)
-                .error(R.drawable.ic_error_black_24dp)
+                .placeholder(R.drawable.ic_file_download_black_120dp)
+                .error(R.drawable.ic_error_black_320dp)
                 .transform(new RoundedCornersTransformation(30, 30))
                 .into(imageView);
 
@@ -115,32 +110,12 @@ public class MovieUtils {
         }
     }
 
-    public static void getMoviesDataUsingOkHttpClient(final MovieActivity movieActivity, final String url, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
-        OkHttpClient client = new OkHttpClient();
+    public static void getMoviesDataUsingOkHttpClient(final MovieActivity movieActivity, String url, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
+        OKHttpClientUtils client = OKHttpClientUtils.getOkHttpClient();
 
-        Request request = new Request.Builder().url(url).build();
-
-        client.newCall(request).enqueue(new Callback() {
+        client.asyncCall(url, client.new OKHttpClientCallBack() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("ERROR", "get image fail, url =" + url, e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful()) {
-                    throw new IOException("Unexpected code " + response);
-                }
-                final String responseData = response.body().string();
-
-                final JSONObject jsonObject;
-                try {
-                    jsonObject = new JSONObject(responseData);
-                } catch (JSONException e) {
-                    Log.d("ERROR", "parse responseData failed!" + responseData, e);
-                    throw new IOException(e);
-                }
-
+            protected void processingJsonData(final JSONObject jsonObject) {
                 movieActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

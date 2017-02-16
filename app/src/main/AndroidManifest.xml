@@ -22,7 +22,7 @@
 
         <meta-data
             android:name="http_client"
-            android:value="AsyncHttpClient" />
+            android:value="OKHttpClient" />
 
         <activity android:name=".activities.YouTubeActivity"></activity>
     </application>

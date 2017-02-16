@@ -28,29 +28,7 @@ import javio.com.flickster.models.MovieUtils;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
-    private final static int POPULAR_AVARAGE_SOCRE = 6;
-
-    private enum MovieType {
-        POPULAR(1), NON_POPULAR(0);
-        private final int value;
-
-        private MovieType(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public static MovieType getTypeBy(Movie movie) {
-            return movie.getVoteAverage() > POPULAR_AVARAGE_SOCRE ? POPULAR : NON_POPULAR;
-        }
-
-        public static MovieType getMoiveTypeByValue(int value) {
-            return value == 1 ? POPULAR : NON_POPULAR;
-        }
-    }
-
+    private final static int POPULAR_AVERAGE_SCORE = 6;
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
@@ -98,7 +76,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder.fullImageView.setImageResource(0);
 
             //viewHolder.fullImageView.setImageResource(0);
-            MovieUtils.setImageByUrlWithRoundedConer(
+            MovieUtils.setImageByUrlWithRoundedCorner(
                     getContext(),
                     movie.getBackDropPath(),
                     viewHolder.fullImageView);
@@ -130,6 +108,27 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 imageView);
 
         return imageView;
+    }
+
+    private enum MovieType {
+        POPULAR(1), NON_POPULAR(0);
+        private final int value;
+
+        private MovieType(int value) {
+            this.value = value;
+        }
+
+        public static MovieType getTypeBy(Movie movie) {
+            return movie.getVoteAverage() > POPULAR_AVERAGE_SCORE ? POPULAR : NON_POPULAR;
+        }
+
+        public static MovieType getMoiveTypeByValue(int value) {
+            return value == 1 ? POPULAR : NON_POPULAR;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     static class ViewHolder {
