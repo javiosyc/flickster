@@ -1,4 +1,4 @@
-package network;
+package javio.com.flickster.network;
 
 import android.util.Log;
 

@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import javio.com.flickster.R;
 import javio.com.flickster.models.Movie;
-import javio.com.flickster.models.MovieUtils;
+import javio.com.flickster.utils.MovieUtils;
 
 /**
  * Created by javiosyc on 2017/2/15.
@@ -58,6 +58,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         rbVoteAverage.setNumStars(10);
         rbVoteAverage.setMax(10);
         rbVoteAverage.setStepSize(0.1f);
-        rbVoteAverage.setRating((float) movie.getVoteAverage());
+        rbVoteAverage.setRating(movie.getVoteAverage().floatValue());
     }
 }

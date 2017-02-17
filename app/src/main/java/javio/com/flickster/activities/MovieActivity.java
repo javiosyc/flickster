@@ -16,7 +16,7 @@ import butterknife.OnItemClick;
 import javio.com.flickster.R;
 import javio.com.flickster.adapter.MovieArrayAdapter;
 import javio.com.flickster.models.Movie;
-import javio.com.flickster.models.MovieUtils;
+import javio.com.flickster.utils.MovieUtils;
 
 
 public class MovieActivity extends AppCompatActivity {

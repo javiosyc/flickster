@@ -1,28 +1,27 @@
 package javio.com.flickster.models;
 
-import org.json.JSONArray;
+import android.os.Parcel;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-import static com.loopj.android.http.AsyncHttpClient.log;
+import javio.com.flickster.utils.MovieUtils;
 
 /**
  * Created by javiosyc on 2017/2/14.
  */
 
-//TODO implements Parcelable
 public class Movie implements Serializable {
+
     private final Long id;
     private final String posterPath;
     private final String originalTitle;
     private final String overview;
     private final String backDropPath;
-
     private final String releaseDate;
-    private final double voteAverage;
+    private final Double voteAverage;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         this.id = jsonObject.getLong("id");
@@ -34,18 +33,14 @@ public class Movie implements Serializable {
         this.releaseDate = jsonObject.getString("release_date");
     }
 
-    public static ArrayList<Movie> fromJSONArray(JSONArray array) {
-        ArrayList<Movie> results = new ArrayList<>();
-
-        for (int i = 0; i < array.length(); i++) {
-            try {
-                JSONObject movie = array.getJSONObject(i);
-                results.add(new Movie(movie));
-            } catch (JSONException e) {
-                log.d("ERROR", "parse error!", e);
-            }
-        }
-        return results;
+    protected Movie(Parcel in) {
+        this.id = in.readLong();
+        this.posterPath = in.readString();
+        this.originalTitle = in.readString();
+        this.overview = in.readString();
+        this.backDropPath = in.readString();
+        this.releaseDate = in.readString();
+        this.voteAverage = in.readDouble();
     }
 
     public String getPosterPath() {
@@ -60,7 +55,7 @@ public class Movie implements Serializable {
         return releaseDate;
     }
 
-    public double getVoteAverage() {
+    public Double getVoteAverage() {
         return voteAverage;
     }
 

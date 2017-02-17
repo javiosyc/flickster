@@ -1,4 +1,4 @@
-package javio.com.flickster.models;
+package javio.com.flickster.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -21,8 +21,11 @@ import cz.msebera.android.httpclient.Header;
 import javio.com.flickster.R;
 import javio.com.flickster.activities.MovieActivity;
 import javio.com.flickster.adapter.MovieArrayAdapter;
+import javio.com.flickster.models.Movie;
+import javio.com.flickster.network.OKHttpClientUtils;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-import network.OKHttpClientUtils;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 /**
  * Created by javiosyc on 2017/2/14.
@@ -42,11 +45,11 @@ public class MovieUtils {
     private MovieUtils() {
     }
 
-    static String getPosterUrl(String path) {
+    public static String getPosterUrl(String path) {
         return String.format(POSTER_URL_FORMAT, path);
     }
 
-    static String getBackDropUrl(String path) {
+    public static String getBackDropUrl(String path) {
         return String.format(BACK_DROP_URL_FORMAT, path);
     }
 
@@ -91,7 +94,7 @@ public class MovieUtils {
         JSONArray moviesResult;
         try {
             moviesResult = response.getJSONArray("results");
-            return Movie.fromJSONArray(moviesResult);
+            return fromJSONArray(moviesResult);
         } catch (JSONException e) {
             Log.d("DEBUG", response.toString(), e);
             return new ArrayList<>();
@@ -127,6 +130,20 @@ public class MovieUtils {
                 .into(imageView);
     }
 
+    public static ArrayList<Movie> fromJSONArray(JSONArray array) {
+        ArrayList<Movie> results = new ArrayList<>();
+
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                JSONObject movie = array.getJSONObject(i);
+                results.add(new Movie(movie));
+            } catch (JSONException e) {
+                log.d("ERROR", "parse error!", e);
+            }
+        }
+        return results;
+    }
+
     private enum Orientation {
         LANDSCAPE(BACKDROP_SIZE, R.drawable.ic_file_download_342) {
             @Override
@@ -154,6 +171,7 @@ public class MovieUtils {
                 return PORTRAIT;
             }
         }
+
         protected abstract String getPathFromMovie(Movie movie);
     }
 }

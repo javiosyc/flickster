@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import javio.com.flickster.R;
 import javio.com.flickster.activities.YouTubeActivity;
 import javio.com.flickster.models.Movie;
-import javio.com.flickster.models.MovieUtils;
+import javio.com.flickster.utils.MovieUtils;
 
 
 /**
