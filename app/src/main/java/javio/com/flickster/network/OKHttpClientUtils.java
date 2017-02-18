@@ -22,14 +22,14 @@ import okhttp3.Response;
 public class OKHttpClientUtils {
     private static final int cacheSize = 10 * 1024 * 1024;
     private static final String cacheFile = "cache";
-    private static OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient;
 
     private OKHttpClientUtils() {
         Cache cache = new Cache(new File(cacheFile), cacheSize);
         okHttpClient = new OkHttpClient.Builder().cache(cache).build();
     }
 
-    public static OKHttpClientUtils getOkHttpClient() {
+    public static OKHttpClientUtils getInstance() {
         return OKHttpClientHolder.instance;
     }
 

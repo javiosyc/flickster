@@ -16,6 +16,7 @@ import butterknife.OnItemClick;
 import javio.com.flickster.R;
 import javio.com.flickster.adapter.MovieArrayAdapter;
 import javio.com.flickster.models.Movie;
+import javio.com.flickster.network.PicassoUtils;
 import javio.com.flickster.utils.MovieUtils;
 
 
@@ -34,6 +35,8 @@ public class MovieActivity extends AppCompatActivity {
 
         movies = new ArrayList<>();
         movieArrayAdapter = new MovieArrayAdapter(this, movies);
+
+        PicassoUtils.init(this);
 
         ButterKnife.bind(this);
 

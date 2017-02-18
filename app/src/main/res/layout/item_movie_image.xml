@@ -24,8 +24,6 @@
         <!--android:layout_gravity="center_horizontal"-->
         <!--android:focusable="false"-->
         <!--android:text="PLAY" />-->
-
-    <!---->
     <!---->
 <!--</LinearLayout> -->
 
@@ -38,7 +36,7 @@ android:layout_height="wrap_content" android:descendantFocusability="blocksDesce
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ivMovieFullImage"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
@@ -50,8 +48,8 @@ android:layout_height="wrap_content" android:descendantFocusability="blocksDesce
     android:adjustViewBounds="false" />
 <ImageButton
     android:id="@+id/playButton"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
+    android:layout_width="@dimen/bt_width_play"
+    android:layout_height="@dimen/bt_height_play"
     android:layout_centerInParent="true"
     android:elevation="@android:dimen/dialog_min_width_major"
     android:background="@drawable/ic_movie_play_24dp"

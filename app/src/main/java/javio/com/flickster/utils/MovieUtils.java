@@ -102,7 +102,7 @@ public class MovieUtils {
     }
 
     public static void getMoviesDataUsingOkHttpClient(final MovieActivity movieActivity, final ArrayList<Movie> movies, final MovieArrayAdapter movieArrayAdapter) {
-        OKHttpClientUtils client = OKHttpClientUtils.getOkHttpClient();
+        OKHttpClientUtils client = OKHttpClientUtils.getInstance();
 
         client.asyncCall(MovieUtils.NOW_PLAYING_URL, client.new OKHttpClientCallBack() {
             @Override

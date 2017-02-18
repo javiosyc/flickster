@@ -6,4 +6,6 @@
     <dimen name="content_margin">3dp</dimen>
     <dimen name="movie_title_margin">35dp</dimen>
     <dimen name="movie_list_item_divider">20sp</dimen>
+    <dimen name="bt_width_play">70dp</dimen>
+    <dimen name="bt_height_play">70dp</dimen>
 </resources>
